@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import StudentList from "./components/StudentList";
 
-const rootDom = document.getElementById('root')
-const root = ReactDOM.createRoot(rootDom)
+const root = ReactDOM.createRoot(document.getElementById('root'))
 
 const appkey = 'demo13_1545210570249'
 async function fetchAllStudents(){
