@@ -1,4 +1,5 @@
 import React from 'react'
+import './Pager.css'
 
 /**
  * 分页组件
@@ -20,7 +21,13 @@ export default function Pager(props) {
     }
     return (
         <>
-            
+            <span className={ props.current === 1 ? "item disabled" : "item" } onClick={() => toPage(1, props)}>首页</span>
+            <span className={ props.current === 1 ? "item disabled" : "item" } onClick={() => toPage(props.current - 1 < 1 ? 1 : props.current - 1, props)}>上一页</span>
+            {/* 数字页码 */}
+            {numbers}
+            <span className={ props.current === pageNumber ? "item disabled" : "item" } onClick={() => toPage(props.current + 1 > pageNumber ? pageNumber : props.current + 1, props)}>下一页</span>
+            <span className={ props.current === pageNumber ? "item disabled" : "item" } onClick={() => toPage(pageNumber, props)}>尾页</span>
+            <span style={{ marginLeft: 10 }}>{props.current}/{pageNumber}</span>
         </>
     )
 }
@@ -55,7 +62,8 @@ function getMaxNumber(min, pageNumber, props) {
  * @param {*} props 所有属性
  */
 function toPage(target, props) {
-    
+    if(target === props.current) return;
+    props.onPageChange && props.onPageChange(target);
 }
 
 /**
