@@ -8,7 +8,7 @@ import Test from './components/Select/Test'
 
 export default function App() {
     return (
-        <div className='root'>
+        <div className='app'>
             <Test />
         </div>
     )
