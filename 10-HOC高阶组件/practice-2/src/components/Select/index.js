@@ -1,20 +1,25 @@
 import React, { Component } from 'react'
 import types from 'prop-types'
 import commonTypes from '../commonTypes'
+import withDataGroup from '../hoc/withDataGroup'
+
+class Option extends Component {
+    static propTypes = {
+        info: commonTypes.singleData.isRequired,//当前单选框的value
+    }
+    render(){
+        return (
+            <option value={this.props.info.value}>
+                {this.props.info.text}
+            </option>
+        )
+    }
+}
+
+const Options = withDataGroup(Option);
 
 export default class Select extends Component {
-    /**
-     * 属性默认值
-     */
-    static defaultProps = {
-        datas: [],
-        value: ''
-    }
-    /**
-     * 属性类型检查
-     */
     static propTypes = {
-        datas: commonTypes.groupDatas.isRequired,
         name: types.string.isRequired,
         value: types.string.isRequired,
         onChange: types.func
@@ -24,19 +29,10 @@ export default class Select extends Component {
         this.props.onChange && this.props.onChange(e.target.value, this.props.name, e);
     }
 
-    getOptions(){
-        return this.props.datas.map(it => (
-            <option key={it.value} value={it.value}>
-                {it.text}
-            </option>
-        ))
-    }
-
-    render() {
-        const options = this.getOptions();
+    render(){
         return (
             <select name={this.props.name} value={this.props.value} onChange={this.handleChange}>
-                {options}
+                <Options {...this.props} />
             </select>
         )
     }
