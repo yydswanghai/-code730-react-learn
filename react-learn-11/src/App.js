@@ -3,7 +3,7 @@ import React from 'react'
 // import ClassDefault from './ClassDefault'
 import ValidationComp, { A } from './ValidationComp'
 import Comp from './Comp'
-import Test from './components/CheckBoxGroup/Test'
+import Test from './components/Select/Test'
 
 export default function App() {
     return (

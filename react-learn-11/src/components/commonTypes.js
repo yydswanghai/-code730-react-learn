@@ -1,6 +1,6 @@
 import types from 'prop-types'
 
-export default {
+const commonTypes = {
     children: types.node,
     groupDatas: types.arrayOf(types.shape({
         value: types.string.isRequired,
@@ -8,3 +8,5 @@ export default {
     })), //多选框组、单选框组、下拉列表的数据源
     chooseDatas: types.arrayOf(types.string),
 }
+
+export default commonTypes

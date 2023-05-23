@@ -9,13 +9,13 @@ export default class CheckBoxGroup extends Component {
 
     static defaultProps = {
         datas: [],
-        chooseValue: []
+        value: []
     }
 
     static propTypes = {
         datas: commonTypes.groupDatas.isRequired,
         name: types.string.isRequired,
-        chooseValue: commonTypes.chooseDatas,
+        value: commonTypes.chooseDatas,
         onChange: types.func
     }
 
@@ -23,9 +23,9 @@ export default class CheckBoxGroup extends Component {
         let val = e.target.value;
         let newVal;
         if(e.target.checked){
-            newVal = [...this.props.chooseValue, val]
+            newVal = [...this.props.value, val]
         }else{
-            newVal = this.props.chooseValue.filter(it => it !== val)
+            newVal = this.props.value.filter(it => it !== val)
         }
         this.props.onChange && this.props.onChange(newVal, this.props.name, e)
     }
@@ -37,7 +37,7 @@ export default class CheckBoxGroup extends Component {
                     type="checkbox"
                     name={this.props.name}
                     value={it.value}
-                    checked={this.props.chooseValue.includes(it.value)}
+                    checked={this.props.value.includes(it.value)}
                     onChange={this.handleChange}
                 />
                 {it.text}

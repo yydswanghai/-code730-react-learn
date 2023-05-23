@@ -16,5 +16,5 @@ datas = [
 ```
 
 2. name：每一个多选框的name属性值
-3. value: 数组，表示当前选中的value值
+3. value: 当前选中的value值
 4. onChange：当选中项发生改变时的事件

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import CheckBoxGroup from './index'
+import Select from './index'
 import { getStudentsList } from '../../mock'
 
 export default class Test extends Component {
+
     state = {
         datas: [],
-        value: []
+        value: ''
     }
 
     async componentDidMount(){
@@ -18,7 +19,7 @@ export default class Test extends Component {
     render() {
         return (
             <div>
-                <CheckBoxGroup
+                <Select
                     name="loves"
                     {...this.state}
                     onChange={newVal => {
@@ -27,7 +28,6 @@ export default class Test extends Component {
                         })
                     }}
                 />
-                <button onClick={e => console.log(this.state)}>当前选中</button>
             </div>
         )
     }
