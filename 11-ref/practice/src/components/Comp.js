@@ -13,7 +13,7 @@ export default class Comp extends Component {
     }
 
     componentDidMount(){
-        console.log('didMount', this.text)
+        console.log('didMount', this.txt)
     }
 
     getRef = el => {
