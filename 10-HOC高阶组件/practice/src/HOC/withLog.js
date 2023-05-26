@@ -5,7 +5,7 @@ import React, { Component } from 'react'
  * @param Comp 组件
  */
 export default function withLog(Comp, str){
-    return class logWrapper extends Component {
+    return class LogWrapper extends Component {
         componentDidMount(){
             console.log(`日志：组件${Comp.name}被创建! ${Date.now()}`)
         }
