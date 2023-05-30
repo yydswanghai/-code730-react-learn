@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.4/locale/ug-cn.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/prop-types/15.8.1/prop-types.js"></script>
+    <!-- 注意：这里script类型是 text/babel 意思是交给babel处理 -->
+    <script type="text/babel">
+        class Select extends React.Component {
+            static propTypes = {
+                curMinute: PropTypes.string.isRequired,
+                curHour: PropTypes.string.isRequired
+            }
+            state = {
+                hours: [],
+                minutes: []
+            }
+            componentDidMount(){
+                let hours = []
+                for (let i = 0; i < 24; i++) {
+                    hours.push(String(i).padStart(2, 0))
+                }
+                let minutes = []
+                for (let i = 0; i < 60; i++) {
+                    minutes.push(String(i).padStart(2, 0))
+                }
+                this.setState({
+                    hours,
+                    minutes
+                })
+            }
+            render() {
+                const hourOptions = this.state.hours.map((it, i) => <option key={i} value={it}>{it}</option>)
+                const minuteOptions = this.state.minutes.map((it, i) => <option key={i} value={it}>{it}</option>)
+                return (
+                    <div>
+                        <select name="hours" value={this.props.curHour} onChange={(e) => {
+                            const val = e.target.value;
+                            this.props.onChange && this.props.onChange(val, 'hours')
+                        }}>
+                            {hourOptions}
+                        </select>
+                        <select name="minutes" value={this.props.curMinute} onChange={(e) => {
+                            const val = e.target.value;
+                            this.props.onChange && this.props.onChange(val, 'minutes')
+                        }}>
+                            {minuteOptions}
+                        </select>
+                    </div>
+                )
+            }
+        }
+
+        function getTime(h = '08', m = '50') {
+            return moment(`${moment().format('YYYY-MM-DD')} ${h}:${m}`)
+        }
+        function diff(start, end) {
+            const minute = end.diff(start, 'minute');
+            return `距离下班还有: ${Math.floor(minute/60)}小时 ${Math.floor(minute%60)}分`
+        }
+        function add(startH, startM) {
+            const delay = 570;
+            const start = getTime(startH, startM);
+            const result = start.add(delay, 'm');
+            return {
+                h: result.format('HH'),
+                m: result.format('mm')
+            }
+        }
+        const local_key = '__clock-off__';
+
+        class App extends React.Component {
+
+            state = {
+                curTime: {
+                    hour: moment().format('HH'),
+                    minute: moment().format('mm')
+                },
+                start: {
+                    hour: '08',
+                    minute: '30',
+                }
+            }
+
+            componentDidMount(){
+                const storage = JSON.parse(sessionStorage.getItem(local_key));
+                if(storage){
+                    this.setState({
+                        start: {
+                            hour: storage.hour,
+                            minute: storage.minute,
+                        }
+                    })
+                }
+            }
+
+            render() {
+                const { h, m } = add(this.state.start.hour, this.state.start.minute)
+                const time = diff(
+                    getTime(this.state.curTime.hour, this.state.curTime.minute),
+                    getTime(h, m));
+                return (
+                    <div className='app'>
+                        <p>
+                            <Select curMinute={this.state.start.minute} curHour={this.state.start.hour} onChange={(newVal, type) => {
+                                if(type === 'hours'){
+                                    this.setState({
+                                        start: {
+                                            ...this.state.start,
+                                            hour: newVal
+                                        }
+                                    }, () => {
+                                        sessionStorage.setItem(local_key, JSON.stringify({
+                                            hour: this.state.start.hour,
+                                            minute: this.state.start.minute,
+                                        }))
+                                    })
+                                }else{
+                                    this.setState({
+                                        start: {
+                                            ...this.state.start,
+                                            minute: newVal
+                                        }
+                                    }, () => {
+                                        sessionStorage.setItem(local_key, JSON.stringify({
+                                            hour: this.state.start.hour,
+                                            minute: this.state.start.minute,
+                                        }))
+                                    })
+                                }
+                            }} />
+                        </p>
+                        <p>
+                            {time}
+                        </p>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <App/>,
+            document.getElementById("root"));
+    </script>
+</body>
+</html>
