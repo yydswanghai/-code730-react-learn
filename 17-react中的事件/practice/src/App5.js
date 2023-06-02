@@ -7,12 +7,17 @@ import ReactDOM from 'react-dom';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
+let prev;
+
 function App() {
     return (
-        <div>
+        <div onClick={e => {
+            console.log(prev === e)
+            console.log('react div被点击了')
+        }}>
             <button onClick={(e) => {
                 console.log('react 按钮被点击了')
-                e.persist()
+                e.persist()// 一定要使用，但是这样会影响效率
                 setTimeout(() => {
                     console.log(e.type)
                 }, 1000);
@@ -35,7 +40,6 @@ function App() {
 //     )
 // }
 
-// let prev;
 // function TestEvent1() {
 //     return (
 //         <div onClick={e => {
