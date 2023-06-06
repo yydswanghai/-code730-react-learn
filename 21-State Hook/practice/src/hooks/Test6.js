@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-export default function App() {
-    console.log('App render')
+export default function Test6() {
+    console.log('Test6 render')
     const [n, setN] = useState(0);
     return (
         <div>

@@ -4,8 +4,8 @@ import React, { useState } from 'react'
  * 使用更新函数改变数据，传入的值不会和原来的数据进行合并，而是直接替换。
  */
 
-export default function App() {
-    console.log('App render')
+export default function Test4() {
+    console.log('Test4 render')
     const [data, setData] = useState({
         x: 1,
         y: 2

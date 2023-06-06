@@ -8,10 +8,11 @@ import React, { useState } from 'react'
 
 window.arr = []
 
-export default function App() {
+export default function Test3() {
     const [ n, setN ] = useState(0);
     const [ visible, setVisible ] = useState(true);
     window.arr.push(setN)
+    console.log(window.arr)
     return (
         <div>
             <p style={{ display: visible ? 'block' : 'none' }}>

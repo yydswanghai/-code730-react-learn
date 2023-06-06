@@ -20,8 +20,8 @@ import React, { useState } from 'react'
  * 函数组件里使用 state hook 实现强制刷新
  * 使用 useState 默认值给一个空对象，不需要第一个参数，刷新使用更新函数参数为一个空对象即可
  */
-export default function App() {
-    console.log('App render')
+export default function Test5() {
+    console.log('Test5 render')
     const [, forceUpdate] = useState({});
     return (
         <div>
