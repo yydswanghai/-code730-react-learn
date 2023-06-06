@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Test from './Test'
-
+// 案例解释 componentWillReceiveProps 被删除的原因
 export default class TestApp extends Component {
     state = {
         number: 1
