@@ -3,7 +3,6 @@ import React from 'react'
 // import ClassDefault from './ClassDefault'
 import ValidationComp, { A } from './ValidationComp'
 import Comp from './Comp'
-import Test from './components/Select/Test'
 
 export default function App() {
     return (
@@ -37,8 +36,6 @@ export default function App() {
                 and={1}
                 score={16}
             />
-
-            <Test />
         </div>
     )
 }

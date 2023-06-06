@@ -54,6 +54,7 @@ export default class ValidationComp extends Component {
     }
     render() {
         const Comp = this.props.elementType
+        console.log(this.props)
         return (
             <div>
                 <Comp />
