@@ -21,7 +21,7 @@
 
 ## JSX
 
-JS的扩展语法，需要使用babel进行转义。（React.createElement的语法糖）
+JS的扩展语法，需要使用babel进行转义。
 
 # 使用脚手架搭建工程
 
