@@ -1,10 +1,13 @@
-# Hello World
+# 起步
 
 直接在页面上使用React，引用下面的JS
 
 ```html
+<!-- React的核心库，与宿主环境无关 -->
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<!-- 依赖核心库，将核心的功能与页面结合 -->
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<!-- 编译JSX -->
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 ```
 
@@ -18,7 +21,7 @@
 
 ## JSX
 
-JS的扩展语法，需要使用babel进行转义。
+JS的扩展语法，需要使用babel进行转义。（React.createElement的语法糖）
 
 # 使用脚手架搭建工程
 

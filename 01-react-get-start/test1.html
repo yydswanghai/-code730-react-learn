@@ -8,11 +8,11 @@
 </head>
 <body>
     <div id="root"></div>
-    <!-- React的核心库，与宿主环境无关 -->
+
     <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <!-- 依赖核心库，将核心的功能与页面结合 -->
     <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     <script>
+        // 1.使用 React.createElement 写起来比较繁琐
         //创建一个span元素
         var span = React.createElement("span", {}, "一个span元素");
         //创建一个H1元素
