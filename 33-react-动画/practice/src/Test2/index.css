@@ -1,0 +1,19 @@
+/* 自定义类样式 */
+.test-enter{
+    opacity: 0;
+}
+.test-enter-active{
+    opacity: 1;
+    transition: all 2s;
+}
+.test-exit{
+    opacity: 1;
+
+}
+.test-exit-active{
+    opacity: 0;
+    transition: all 2s;
+}
+.test-exit-done{
+    opacity: 0;
+}

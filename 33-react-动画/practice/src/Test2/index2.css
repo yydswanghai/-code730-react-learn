@@ -1,0 +1,32 @@
+.container{
+    width: 180px;
+    margin: 0 auto;
+}
+.container-comp{
+    height: 100px;
+    position: relative;
+}
+.container-comp .title{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.exit-active{
+    opacity: 0;
+    transition: all 1s;
+    transform: translateX(-100px);
+}
+.exit-done{
+    display: none;
+}
+
+.enter, .appear{
+    display: block;
+    opacity: 0;
+    transform: translateX(100px);
+}
+.enter-active, .appear-active{
+    opacity: 1;
+    transition: all 1s;
+    transform: translateX(0);
+}

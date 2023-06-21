@@ -1,0 +1,13 @@
+.container{
+    width: 180px;
+    margin: 0 auto;
+}
+.container-comp{
+    height: 100px;
+    position: relative;
+}
+.container-comp .title{
+    position: absolute;
+    left: 0;
+    top: 0;
+}
