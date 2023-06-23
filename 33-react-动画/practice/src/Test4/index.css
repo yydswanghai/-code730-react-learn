@@ -1,0 +1,14 @@
+.exit{
+    transform-origin: 0 0;
+}
+.exit-active{
+    transform: scale(0);
+    transition: 3s;
+}
+.enter{
+    opacity: 0;
+}
+.enter-active{
+    opacity: 1;
+    transition: 3s;
+}
