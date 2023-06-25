@@ -44,3 +44,7 @@ in-out:
 4. 退出完成后，将该DOM元素移除
 
 > 该库寻找dom元素的方式，是使用已经过时的API：findDomNode，该方法可以找到某个组件下的DOM根元素
+
+## TransitionGroup
+
+该组件的children，接收多个Transition或CSSTransition组件，该组件用于根据这些子组件的key值，控制他们的进入和退出状态
