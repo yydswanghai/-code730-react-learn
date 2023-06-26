@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="//mapapi.qq.com/web/mapComponents/geoLocation/v/geolocation.min.js"></script>
+    <script crossorigin src="//map.qq.com/api/gljs?v=1.exp&libraries=service&key=HB7BZ-DZKCW-72FRE-3RJIC-IAG3O-ZNFPK"></script>
+</head>
+<body>
+    <div>地图</div>
+    <div id="allmap" style="width: 800px;height: 400px"></div>
+    <script>
+        const _geolocation = new window.qq.maps.Geolocation('HB7BZ-DZKCW-72FRE-3RJIC-IAG3O-ZNFPK', 'mapqq');
+        _geolocation.getLocation(async function(rs) {
+            console.log(rs)
+        })
+
+        function setMap(lat, lng) {
+            let admin_latitude = 23.163616
+            let admin_longitude = 113.324047
+            var map = new TMap.Map('allmap', {
+                zoom: 12,
+                center: new TMap.LatLng(admin_latitude, admin_longitude)
+            });
+            var markerLayer = new TMap.MultiMarker({
+                id: 'marker-layer',
+                map: map,
+                styles: {
+                    'marker': new TMap.MarkerStyle({
+                        width: 25,
+                        height: 35,
+                        anchor: { x:16, y:32 },
+                        src: 'https://mapapi.qq.com/web/lbs/javascriptGL/demo/img/markerDefault.png'
+                    })
+                },
+                geometries: [{
+                    id: 'marker1',
+                    // styleId: 'marker',
+                    position: new TMap.LatLng(admin_latitude, admin_longitude),
+                    properties: {
+                        title: 'marker1'
+                    }
+                },{
+                    id: 'marker2',
+                    styleId: 'marker',
+                    position: new TMap.LatLng(lat, lng),
+                    properties: {
+                        title: 'marker2'
+                    }
+                }]
+            });
+        }
+        setMap(23.163001, 113.310174)
+    </script>
+</body>
+</html>
