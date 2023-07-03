@@ -17,12 +17,30 @@
         })
 
         function setMap(lat, lng) {
-            let admin_latitude = 23.163616
-            let admin_longitude = 113.324047
+            let admin_latitude = 23.163616;
+            let admin_longitude = 113.324047;
+            const adminPos = new TMap.LatLng(admin_latitude, admin_longitude);
+            const userPos = new TMap.LatLng(lat, lng);
             var map = new TMap.Map('allmap', {
                 zoom: 12,
-                center: new TMap.LatLng(admin_latitude, admin_longitude)
+                center: adminPos
             });
+            var circle = new TMap.MultiCircle({
+                map: map,
+                styles: {
+                    'circle': new TMap.CircleStyle({
+                        'color': 'rgba(41,91,255,0.16)',
+                        'showBorder': true,
+                        'borderColor': 'rgba(41,91,255,1)',
+                        'borderWidth': 2,
+                    })
+                },
+                geometries: [{
+                    styleId: 'circle',
+                    center: adminPos,
+                    radius: 5000,
+                }]
+            })
             var markerLayer = new TMap.MultiMarker({
                 id: 'marker-layer',
                 map: map,
@@ -37,14 +55,14 @@
                 geometries: [{
                     id: 'marker1',
                     // styleId: 'marker',
-                    position: new TMap.LatLng(admin_latitude, admin_longitude),
+                    position: adminPos,
                     properties: {
                         title: 'marker1'
                     }
                 },{
                     id: 'marker2',
                     styleId: 'marker',
-                    position: new TMap.LatLng(lat, lng),
+                    position: userPos,
                     properties: {
                         title: 'marker2'
                     }
