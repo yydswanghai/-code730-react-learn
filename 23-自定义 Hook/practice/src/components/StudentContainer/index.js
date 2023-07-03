@@ -32,7 +32,7 @@ export default function StudentContainer() {
                 }}
                 />
             <Select
-                name="select-panel-number"
+                name="select-page-size"
                 datas={[{text: '10',value: '10'}, {text: '20',value: '20'}, {text: '50',value: '50'}]}
                 value={String(pageSize)}
                 onChange={newVal => {
@@ -42,7 +42,7 @@ export default function StudentContainer() {
             <p>
                 最多显示的数字页码：
                 <Select
-                    name="select-page-size"
+                    name="select-panel-number"
                     datas={[{text: '3',value: '3'}, {text: '4',value: '4'}, {text: '5',value: '5'}]}
                     value={String(panelNumber)}
                     onChange={newVal => {
