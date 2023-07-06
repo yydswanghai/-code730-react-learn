@@ -1,0 +1,13 @@
+.aside-container{
+    padding: 6px 10px;
+    box-sizing: border-box;
+}
+.loading{
+    margin-top: 10px;
+    text-align: center;
+    min-height: 34px;
+    transition: .8s;
+}
+.loading.active{
+    color: rgb(101, 187, 236);
+}
