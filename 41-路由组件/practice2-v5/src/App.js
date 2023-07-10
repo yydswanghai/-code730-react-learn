@@ -7,7 +7,7 @@ export default function App() {
     return (
         <Router>
             <Switch>
-                <Route path={["/login", "/login/:year?/:month?/:day?", "/login/:year?/:month?/:day?/*"]} exact component={Login} />
+                <Route path="/login" exact component={Login} />
                 <Route path="/" component={Admin} />
             </Switch>
         </Router>
