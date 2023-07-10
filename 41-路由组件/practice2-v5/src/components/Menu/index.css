@@ -3,17 +3,18 @@
     padding: 0 10px;
 }
 .menu li{
-    font-size: 14px;
     margin: 4px 0;
-    padding: 4px 64px 4px 8px;
     border-radius: 6px;
-    color: rgb(56,56,56);
-    font-weight: bold;
 }
 .menu li a{
-    color: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    border-radius: 6px;
+    padding: 4px 64px 4px 8px;
+    color: rgb(56,56,56);
     text-decoration: none;
 }
-.menu li:hover, .menu li.active{
+.menu li:hover, .menu li a.active{
     background-color: rgb(227 227 227/1);
 }

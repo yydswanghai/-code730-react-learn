@@ -4,11 +4,11 @@ import Layout from '../components/Layout'
 import Header from '../components/Header'
 import Aside from '../components/Aside'
 import Menu from '../components/Menu'
-import Home from './Home'
+import Index from './Index'
 import Dashboard from './Dashboard'
-import DataList from './DataList'
 import Sales from './Sales'
-import Detail from './Detail'
+import DataList from './DataList'
+import Detail from './DataList/Detail'
 
 export default function Admin() {
     return (
@@ -16,7 +16,7 @@ export default function Admin() {
             header={<Header/>}
             aside={<><Aside/><Menu /></>}>
             <Switch>
-                <Route path="/" exact component={Home} />
+                <Route path="/" exact component={Index} />
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/listdata" exact component={DataList} />
                 <Route path="/listdata/:id" exact component={Detail} />
