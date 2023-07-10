@@ -6,7 +6,7 @@ const B = () => (<h1>组件B</h1>);
 const C = () => (<h1>组件C</h1>);
 const NotFound = () => (<h1>404 not found</h1>);
 
-export default function index() {
+export default function App() {
     return (
         <Router>
             {/* 区分大小写匹配 => /A */}
