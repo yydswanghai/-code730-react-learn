@@ -20,8 +20,8 @@ export default function Contact() {
     return (
         <>
             <ul>
-                <li>【编号】&ldquo; &rdquo; {user.id}</li>
-                <li>【姓名】{user.name}</li>
+                <li>【编号】{user.id}</li>
+                <li>【姓名】&ldquo;{user.name}&rdquo;</li>
                 <li>【性别】{user.sex === 0 ? '男' : '女'}</li>
                 <li>【年龄】{user.age}</li>
                 <li>【邮箱】{user.email}</li>
