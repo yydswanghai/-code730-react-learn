@@ -10,12 +10,12 @@ const NotFound = () => (<h1>
     <Route path="/abc" component={Child} />
 </h1>);
 
-export default function App() {
+export default function Index() {
     return (
         <Router>
             {/* Switch 匹配到一个，后续就不再匹配 */}
             <Switch>
-                <Route path="/a" component={A} />
+                <Route path="/a" component={A} exact />
                 <Route path="/a/b" component={B} />
                 <Route path="/a/c" component={C} />
                 <Route component={NotFound} />

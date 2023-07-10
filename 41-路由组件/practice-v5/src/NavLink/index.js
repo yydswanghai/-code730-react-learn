@@ -1,25 +1,25 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-// import Link from './Link'
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom'
+import './index.css'
 
 const PageA = () => <h1>PageA</h1>;
 const PageB = () => <h1>PageB</h1>;
 
 function NavBar() {
     return <div>
-        <Link to="/a">nav-a</Link>
+        <NavLink to="/a" exact strict activeClassName="selected" activeStyle={{ background: '#eee' }}>nav-a</NavLink>
         <br/>
-        <Link to={{
+        <NavLink to={{
             pathname: '/b',
             hash: '#abc',
             search: '?a=1&b=2'
         }} replace innerRef={node => {
             console.log(node)
-        }}>nav-b</Link>
+        }}>nav-b</NavLink>
     </div>
 }
 
-export default function App() {
+export default function Index() {
     return (
         <Router>
             <NavBar />

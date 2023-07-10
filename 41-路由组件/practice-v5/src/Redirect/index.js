@@ -14,7 +14,7 @@ function NavBar() {
     </div>
 }
 
-export default function App() {
+export default function Index() {
     return (
         <Router>
             <NavBar />
