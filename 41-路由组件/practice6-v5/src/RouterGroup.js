@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react'
 import { BrowserRouter as Router, withRouter } from "react-router-dom"
 
+// 全局，上一次location, 本次location, 方式, 取消阻塞函数, 取消监听函数
 let prevLocation, location, action, unBlock, unListen;
 
 // 不生成任何元素，仅为了获取上下文
