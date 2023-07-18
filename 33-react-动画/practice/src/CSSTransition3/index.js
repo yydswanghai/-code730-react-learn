@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import "animate.css"
-import "./index3.css"
+import "./index.css"
 
 function MyTransition({ visible, children }) {
     return <CSSTransition in={visible} timeout={800} unmountOnExit appear classNames={{

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { SwitchTransition, CSSTransition } from 'react-transition-group'
 import "animate.css"
 /**
+ * 使用animate.css的样式
  * SwitchTransition需要与CSSTransition联用
  */
 

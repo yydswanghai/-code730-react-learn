@@ -1,11 +1,11 @@
 import React from 'react'
-import Test from './Test4'
-// import Test from './Test3/index2'
-// import Test from './Test3'
-// import Test from './Test2/index3'
-// import Test from './Test2/index2'
-// import Test from './Test2'
-// import Test from './Test1'
+import Test from './TransitionGroup'
+// import Test from './SwitchTransition2'
+// import Test from './SwitchTransition'
+// import Test from './CSSTransition3'
+// import Test from './CSSTransition2'
+// import Test from './CSSTransition'
+// import Test from './Transition'
 
 export default function App() {
     return (

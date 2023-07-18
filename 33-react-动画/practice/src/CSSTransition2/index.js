@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import "./index2.css";
+import "./index.css";
 
 function Comp1({ visible }) {
     return <CSSTransition in={visible} timeout={1000} unmountOnExit appear>
