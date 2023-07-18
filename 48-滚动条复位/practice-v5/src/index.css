@@ -1,0 +1,16 @@
+.nav{
+    position: fixed;
+    background: rgb(233 222 231);
+}
+.page{
+    width: 800px;
+    box-sizing: border-box;
+    padding: 0 20px 0 50px;
+    word-break: break-all;
+}
+.page1{
+    background: rgb(170, 222, 243);
+}
+.page2{
+    background: rgb(177, 226, 204);
+}
