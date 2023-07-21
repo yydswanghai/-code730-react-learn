@@ -1,3 +1,6 @@
+import BlockManager from "./BlockManager";
+import ListenerManager from "./ListenerManager";
+
 /**
  * @param {{
  * basename: string,
@@ -23,25 +26,55 @@ export default function createBrowserHistory(options = {}) {
     function goForward() {
         window.history.forward();
     }
-    function push(to, state) {
+    /**
+     * 实现push或replace的公共方法
+     * @param {'PUSH'|'REPLACE'} action
+     */
+    function changePage(to, state, action) {
         const pathInfo = handlePathAndState(to, state, basename);
-        window.history.pushState({
+        let func = window.history.pushState;
+        if(action === 'REPLACE'){
+            func = window.history.replaceState;
+        }
+        func({
             key: createKey(keyLength),
             state: pathInfo.state
         }, null, pathInfo.path);
-        if(forceRefresh){// 强制刷新
-            window.location.href = pathInfo.path;
-        }
-        history.action = 'PUSH';
+        const location = createLocation(basename);
+
+        blockManager.trigger(location, action, () => {
+            // =>
+            listenerManager.trigger(location, action);
+            history.location = location;
+            history.action = action;
+            // 强制刷新
+            if(forceRefresh) window.location.href = pathInfo.path;
+        })
+    }
+    function push(to, state) {
+        changePage(to, state, 'PUSH');
     }
     function replace(to, state) {
-        const pathInfo = handlePathAndState(to, state, basename);
-        window.history.replaceState({
-            key: createKey(keyLength),
-            state: pathInfo.state
-        }, null, pathInfo.path);
-        history.action = 'REPLACE';
+        changePage(to, state, 'REPLACE');
     }
+    const listenerManager = new ListenerManager();
+    function listen(listener) {
+        return listenerManager.addListener(listener)
+    }
+
+    (() => {
+        window.addEventListener('popstate', () => {
+            const location = createLocation(basename);
+            listenerManager.trigger(location, 'POP');
+            history.location = location;
+        })
+    })()
+
+    const blockManager = new BlockManager(getUserConfirmation);
+    function block(prompt) {
+        return blockManager.block(prompt);
+    }
+
     const history = {
         action: 'POP',
         length: window.history.length,
@@ -51,6 +84,8 @@ export default function createBrowserHistory(options = {}) {
         goForward,
         push,
         replace,
+        listen,
+        block
     }
     return history
 }
