@@ -1,3 +1,6 @@
+/**
+ * 阻塞
+ */
 export default class BlockManager {
 
     prompt = null;// 该属性是否有值，决定了是否有阻塞
@@ -6,8 +9,9 @@ export default class BlockManager {
         this.getUserConfirmation = getUserConfirmation;
     }
     /**
-     * @param {string|(message, callback) => void} prompt 
+     * 设置一个阻塞，传递一个提示消息
      * 可以是字符串，也可以是一个函数，函数返回一个消息字符串
+     * @param {string|(message, callback) => void} prompt
      * @return {() => void} unblock
      */
     block(prompt){
@@ -39,7 +43,7 @@ export default class BlockManager {
             message = this.prompt(location, action)
         }
         // 调用getUserConfirmation
-        getUserConfirmation(message, (result) => {
+        this.getUserConfirmation(message, (result) => {
             if(result === true){// 可以跳转
                 callback();
             }
