@@ -1,17 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import matchPath from './matchPath'
-import context from './context'
+import matchPath from '../utils/matchPath'
+import ctx from './context'
 import PropTypes from 'prop-types'
 
-const ctxValue = {};// 上下文中的对象
-let unListen;
 export default function Router(props) {
     const [location, setLocation] = useState(props.history.location);
-    ctxValue.history = props.history;
-    ctxValue.location = location;
-    ctxValue.match = matchPath('/', location.pathname)
 
-    unListen = useMemo(() => {
+    let unListen = useMemo(() => {
         return props.history.listen((location, action) => {
             setLocation(location)
         })
@@ -21,9 +16,16 @@ export default function Router(props) {
         return unListen;
     }, [])
 
-    return <context.Provider value={ctxValue}>
+    // Router上下文里match的使用默认值
+    const ctxValue = {
+        history: props.history,
+        location: location,
+        match: matchPath('/', location.pathname)
+    }
+
+    return <ctx.Provider value={ctxValue}>
         {props.children}
-    </context.Provider>
+    </ctx.Provider>
 }
 
 Router.propTypes = {

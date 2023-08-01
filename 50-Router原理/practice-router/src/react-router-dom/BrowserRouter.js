@@ -1,4 +1,6 @@
-import { Router, createBrowserHistory } from '../react-router'
+import { createBrowserHistory } from '../utils/myHistory'
+import { Router } from '../react-router'
+import React from 'react'
 
 const history = createBrowserHistory()
 
