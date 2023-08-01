@@ -47,22 +47,21 @@ export default function createBrowserHistory(options = {}) {
      * @param {'PUSH'|'REPLACE'} action
      */
     function changePage(to, state, action) {
-        const pathInfo = handlePathAndState(to, state, basename);
-
+        const path = handlePath(to, basename);
         const location = createLocationFormPath(to, state, basename);
         // 触发阻塞
         blockManager.trigger(location, action, () => {
-            const data = { key: createKey(keyLength), state: pathInfo.state };
+            const data = { key: createKey(keyLength), state };
             if(action === 'PUSH'){
-                window.history.pushState(data, null, pathInfo.path);
+                window.history.pushState(data, null, path);
             }else if(action === 'REPLACE'){
-                window.history.replaceState(data, null, pathInfo.path);
+                window.history.replaceState(data, null, path);
             }
             listenerManager.trigger(location, action);// 触发监听
             history.location = location;// 改变action
             history.action = action;// 改变location
             if(forceRefresh) {// 强制刷新
-                window.location.href = pathInfo.path;
+                window.location.href = path;
             }
         })
     }
@@ -79,7 +78,8 @@ export default function createBrowserHistory(options = {}) {
         return blockManager.block(prompt);
     }
     function createHref(location) {
-        return basename + location.pathname + location.search + location.hash;
+        const { pathname = '/', search = '', hash = '' } = location;
+        return basename + pathname + search + hash;
     }
 
     (() => {
@@ -117,35 +117,31 @@ function createKey(keyLength) {
 }
 
 /**
+ * 转换完整路径
  * '?a=1b=2#c=3' + '/news' =>  '/news?a=1&b=2#c=3'
- * @param {string|object} to
+ * @param {string|{ pathname: string, search?: string, hash?: string }} to
  * @param {*} state
- * @return {{
- *  path:string
- *  state:*
- * }}
+ * @return {string} path
  */
-function handlePathAndState(to, state, basename) {
+function handlePath(to, basename) {
     if(typeof to === 'string'){
-        return {
-            path: basename + to,
-            state,
-        }
+        return basename + to;
     }else if(typeof to === 'object'){
         let result = to.pathname;
-        let { search = '', hash = '' } = to;
-        if(search.charAt(0) !== '?'){
-            search = '?' + search;
+        let { search, hash } = to;
+        if(search){
+            if(search.charAt(0) !== '?'){
+                search = '?' + search;
+            }
+            result += search;
         }
-        if(hash.charAt(0) !== '#'){
-            hash = '#' + hash;
+        if(hash){
+            if(hash.charAt(0) !== '#'){
+                hash = '#' + hash;
+            }
+            result += hash;
         }
-        result += search;
-        result += hash;
-        return {
-            path: basename + result,
-            state
-        }
+        return basename + result;
     }else{
         throw new Error('to mush be string or object');
     }
@@ -189,12 +185,23 @@ function createLocation(basename = '') {
 }
 /**
  * 创建location对象，用于发生阻塞后跳转生成的location对象
- * '/12?a=1&b=2#c=3' {name: 'abc', age: 18} state /news
  * @param {string|object} to
  * @param {*} state
  * @param {string} basename
  */
-function createLocationFormPath(to, state, basename = '') {
+export function createLocationFormPath(to, state = null, basename = '') {
+    if(typeof to === 'object'){
+        if(basename){
+            const reg = new RegExp(`${basename}`);
+            to.pathname = to.pathname.replace(reg, '');// 处理basename情况
+        }
+        return {
+            pathname: to.pathname,
+            search: to.search || '',
+            hash: to.hash || '',
+            state
+        }
+    }
     let pathname = to.replace(/[#?].*$/ ,'');// 取出pathname
     if(basename){
         const reg = new RegExp(`${basename}`);

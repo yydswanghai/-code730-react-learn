@@ -26,17 +26,11 @@ export default function matchPath(path, pathname, options = {}) {
  * 将传入的react-router配置，转换为path-to-regexp配置
  * @param {*} options
  */
-function getOptions(options) {
-    const defaultOptions = {
-        exact: false,// 是否精确匹配
-        sensitive: false,// 是否大小写敏感
-        strict: false
-    }
-    const opt = { ...defaultOptions, ...options }
+function getOptions({ exact = false, sensitive = false, strict = false } = {}) {
     return {
-        end: opt.exact,
-        sensitive: opt.sensitive,
-        strict: opt.strict
+        end: exact,
+        sensitive,
+        strict
     }
 }
 /**

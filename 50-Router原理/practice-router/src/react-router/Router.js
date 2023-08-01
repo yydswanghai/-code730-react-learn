@@ -10,10 +10,12 @@ export default function Router(props) {
         return props.history.listen((location, action) => {
             setLocation(location)
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         return unListen;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // Router上下文里match的使用默认值
