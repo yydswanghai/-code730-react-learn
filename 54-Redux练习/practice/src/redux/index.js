@@ -1,34 +1,16 @@
-import { legacy_createStore as createStore, bindActionCreators } from 'redux'
-import * as actionType from './action-type'
-import * as numAction from './action'
-/**
- * @param state 之前仓库中的状态
- * @param {{type:string, payload:*}} action 描述要做什么的对象
- * @return 一个新的状态，如果是无效的操作类型，数据不变
- */
-function reducer(state, action) {
-    if(action.type === actionType.INCREASE){
-        return state + 1;
-    }
-    if(action.type === actionType.DECREASE){
-        return state - 1;
-    }
-    if(action.type === actionType.SET){
-        return action.payload;
-    }
-    return state;
-}
-const store = createStore(reducer, 10);
-const bindAction = bindActionCreators(numAction, store.dispatch);
+import { legacy_createStore as createStore } from 'redux'
+import { createIncrease, createDecrease } from './action/number-action'
+import reducer from './reducer'
 
-console.log(store.getState())
+const store = createStore(reducer);
+console.log('初始化', store.getState())
 
-// store.dispatch(numAction.getIncrease());
-bindAction.getIncrease();
+const unListen = store.subscribe(() => {
+    console.log('状态改变了', store.getState())
+})
 
-console.log(store.getState())
+store.dispatch(createIncrease());
 
-// store.dispatch(numAction.getSetAction(3));
-bindAction.getSetAction(3);
+unListen();// 取消监听
 
-console.log(store.getState())
+store.dispatch(createDecrease());
