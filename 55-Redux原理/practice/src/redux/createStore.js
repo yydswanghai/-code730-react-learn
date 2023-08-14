@@ -1,20 +1,5 @@
-/**
- * 判断是不是 plain-object 平面对象
- * @param {object} obj
- */
-function isPlainObject(obj) {
-    if(typeof obj !== 'object'){
-        return false;
-    }
-    return Object.getPrototypeOf(obj) === Object.prototype;
-}
-/**
- * 得到指定长度的随机字符串
- * @param {number} length
- */
-function getRandomString(length) {
-    return Math.random().toString(36).substring(2, length + 2).split('').join('_')
-}
+import actionTypes from './actionTypes'
+import { isPlainObject } from './utils'
 /**
  * 实现createStore功能
  * @param {function} reducer reducer
@@ -30,6 +15,7 @@ export default function (reducer, defaultState) {
         if(!isPlainObject(action)){
             throw new TypeError('action 必须是一个平面对象')
         }
+        // 验证action的type属性是否存在
         if(action.type === undefined){
             throw new TypeError('action 必须有"type"属性')
         }
@@ -53,7 +39,7 @@ export default function (reducer, defaultState) {
         }
     }
     // 1.初始创建时，调用一次dispatch
-    dispatch({ type: '@@redux/INIT' + getRandomString(7) })
+    dispatch({ type: actionTypes.INIT })
     return {
         dispatch,
         getState,

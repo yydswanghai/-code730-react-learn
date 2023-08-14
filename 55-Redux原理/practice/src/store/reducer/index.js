@@ -1,13 +1,9 @@
 import numberReducer from './number.js'
+import { combineReducers } from '../../redux/'
 
 /**
  * 统一合并后的reduces
  */
-export default (state = {}, action) => {
-    // console.log('reducer运行了', state, action)
-    const newState = {
-        number: numberReducer(state.number, action)
-    };
-
-    return newState;
-}
+export default combineReducers({
+    number: numberReducer
+})

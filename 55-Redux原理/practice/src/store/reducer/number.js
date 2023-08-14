@@ -6,6 +6,7 @@ import { INCREASE, DECREASE, SET } from '../action/number-action'
  * @return 一个新的状态，如果是无效的操作类型，数据不变
  */
 export default function numberReducer(state = 10, action) {
+    console.log(state, action)
     switch (action.type) {
         case INCREASE:
             return state + 1;
