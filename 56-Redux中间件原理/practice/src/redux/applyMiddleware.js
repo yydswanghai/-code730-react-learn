@@ -13,9 +13,12 @@ export default function (...middlewares) {
             const store = createStore(reducer, defaultState);//创建仓库
             // 一开始就抛出错误，表示目前不能直接使用
             let dispatch = () => { throw new Error('目前还不能使用该函数') };
-            const simpleStore = {// store的一部份
+            // store的一部份
+            // simpleStore对象里的dispatch是经过中间件混合后的dispatch
+            // 当运行dispatch()是否的时候运行(...args) => dispatch(...args)，保证dispatch是最新的
+            const simpleStore = {
                 getState: store.getState,
-                dispatch: store.dispatch
+                dispatch: (...args) => dispatch(...args)
             }
             // 给dispatch赋值
             // 根据中间件数组，得到一个个dispatch创建函数数组
