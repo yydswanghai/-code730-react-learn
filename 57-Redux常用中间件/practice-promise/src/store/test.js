@@ -6,4 +6,6 @@ store.dispatch(changeAction({
     keyword: '傅'
 }))
 
-store.dispatch(fetchStudents())
+store.dispatch(
+    fetchStudents(store.getState())
+)
