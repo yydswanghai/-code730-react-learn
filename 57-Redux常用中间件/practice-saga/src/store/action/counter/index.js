@@ -3,6 +3,8 @@ export const actionTypes = {
     decrease: Symbol('decrease'),
     asyncIncrease: Symbol('asyncIncrease'),
     asyncDecrease: Symbol('asyncDecrease'),
+    autoIncrease: Symbol('autoIncrease'),
+    stopIncrease: Symbol('stopIncrease')
 }
 
 export const increase = () => ({
@@ -17,4 +19,10 @@ export const asyncIncrease = () => ({
 })
 export const asyncDecrease = () => ({
     type: actionTypes.asyncDecrease
+})
+export const autoIncrease = () => ({
+    type: actionTypes.autoIncrease
+})
+export const stopIncrease = () => ({
+    type: actionTypes.stopIncrease
 })
