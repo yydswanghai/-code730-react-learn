@@ -2,7 +2,6 @@ import { actionTypes, setLoadingAction, setStuAndTotalAction } from '../action/s
 import { takeEvery, put, call, select } from 'redux-saga/effects'
 import { getStudents } from '../../mock'
 
-
 function* generatorFn() {
     const state = yield select();
     console.log('仓库数据：', state);

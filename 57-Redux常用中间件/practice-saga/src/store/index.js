@@ -4,6 +4,7 @@ import logger from "redux-logger"
 import createSagaMiddleware from 'redux-saga'
 import sagaTask from './saga'
 
+// 启动saga任务
 const saga = createSagaMiddleware();
 
 export default createStore(reducer,
