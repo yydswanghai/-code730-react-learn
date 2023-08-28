@@ -4,6 +4,8 @@
 /* 有效的effect的类型 */
 export const effectTypes = {
     CALL: "CALL",
+    PUT: "PUT",
+    SELECT: "SELECT",
     TAKE: "TAKE",
     FORK: "FORK",
     ALL: "ALL",

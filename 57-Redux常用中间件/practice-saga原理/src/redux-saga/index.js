@@ -1,4 +1,5 @@
 import runSaga from "./runSaga"
+import {  } from './Channel'
 /**
  * 创建saga中间件
  */

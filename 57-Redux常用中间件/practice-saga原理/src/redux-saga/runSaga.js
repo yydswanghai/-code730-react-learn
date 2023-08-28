@@ -2,7 +2,7 @@ import isGenerator from "is-generator"
 import isPromise from 'is-promise'
 import Task from './Task'
 import { isEffect } from './effectHelper'
-
+import runEffect from './runEffect'
 /**
  * 开启一个新任务
  * @param {*} env 全局环境的数据，被saga执行期共享的数据
@@ -48,7 +48,7 @@ export default function(env, generatorFn, ...args){
                 .then(r => next(r))
                 .catch(err => next(null, err))
         }else if(isEffect(value)){
-            console.log('是一个effect对象')
+            runEffect(env, value, next);
         }else{
             next(value);// 其他直接进行下一步
         }
