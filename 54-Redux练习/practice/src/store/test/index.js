@@ -1,6 +1,6 @@
 import { legacy_createStore as createStore } from 'redux'
-import { createIncrease, createDecrease } from './action/number-action'
-import reducer from './reducer'
+import { createIncrease, createDecrease } from '../action/number-action'
+import reducer from '../reducer'
 
 const store = createStore(reducer);
 console.log('初始化', store.getState())

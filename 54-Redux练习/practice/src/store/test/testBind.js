@@ -1,6 +1,6 @@
 import { legacy_createStore as createStore, bindActionCreators } from 'redux'
-import * as numAction from './action'
-import reducer from './reducer'
+import * as numAction from '../action'
+import reducer from '../reducer'
 
 const store = createStore(reducer, 10);
 /**
