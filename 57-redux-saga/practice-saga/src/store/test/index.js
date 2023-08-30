@@ -1,6 +1,6 @@
-import store from './index'
-import { fetchStudents } from './action/student/searchResult'
-import { asyncIncrease, asyncDecrease, autoIncrease, stopIncrease } from './action/counter'
+import store from '../index'
+import { fetchStudents } from '../action/student/searchResult'
+import { asyncIncrease, asyncDecrease, autoIncrease, stopIncrease } from '../action/counter'
 
 // store.dispatch(fetchStudents())
 
