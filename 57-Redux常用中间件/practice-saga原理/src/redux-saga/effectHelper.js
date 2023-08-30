@@ -8,6 +8,7 @@ export const effectTypes = {
     SELECT: "SELECT",
     TAKE: "TAKE",
     FORK: "FORK",
+    CANCEL: "CANCEL",
     ALL: "ALL",
 }
 /* effect对象特殊的属性名 */

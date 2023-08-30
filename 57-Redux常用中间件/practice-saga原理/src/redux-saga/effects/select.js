@@ -9,10 +9,9 @@ export function select(func) {
     })
 }
 export function runSelectEffect(env, effect, next) {
-    const state = env.store.getState();// 整个仓库数据
-    const { fn } = effect.payload;
-    if(fn){
-        state = fn(state);// 运行函数的返回结果为state
+    let state = env.store.getState();// 整个仓库数据
+    if(effect.payload.fn){
+        state = effect.payload.fn(state);// 运行函数的返回结果为state
     }
     next(state);
 }

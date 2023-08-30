@@ -23,8 +23,9 @@ export default class Channel {
     put(prop, ...args){
         if(this.listeners[prop]){
             const funcs = this.listeners[prop];// 订阅函数的数组
-            // 删除订阅
+            // 1.先删除订阅，避免在运行订阅函数期间又添加了新订阅者
             delete this.listeners[prop];
+            // 2.再运行订阅函数
             funcs.forEach(fn => fn(...args));
         }
     }

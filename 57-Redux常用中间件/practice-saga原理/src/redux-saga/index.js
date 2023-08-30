@@ -1,5 +1,5 @@
 import runSaga from "./runSaga"
-import {  } from './Channel'
+import Channel from './Channel'
 /**
  * 创建saga中间件
  */
@@ -11,11 +11,15 @@ export default function(){
          */
         const env = {
             store,
+            channel: new Channel()
         }
         sagaMiddleware.run = runSaga.bind(null, env);
         return function(next){
             return function(action){
-                return next(action);// 直接交给下一个中间件处理
+                const result = next(action);// 直接交给下一个中间件处理
+                // 发布订阅
+                env.channel.put(action.type, action);
+                return result;
             }
         }
     }

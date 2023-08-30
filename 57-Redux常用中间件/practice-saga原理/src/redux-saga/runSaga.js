@@ -11,13 +11,24 @@ import runEffect from './runEffect'
  */
 export default function(env, generatorFn, ...args){
     const iterator = generatorFn(...args);
-    if(isGenerator(iterator)){
-        // 生成器函数，则saga帮你去调用next
-        next();
-    }else{
-        console.log('一个普通函数')
+    // 生成器函数，让saga帮你去调用next
+    return proc(env, iterator);
+}
+
+/**
+ * 执行一个 generator(iterator)
+ */
+export function proc(env, iterator) {
+    if(!isGenerator(iterator)){
+        throw new TypeError(`${iterator.name || iterator} 你必须传递一个生成器函数`)
     }
+    let cbObj = {// 回调函数对象，通知task任务已经结束
+        callback: null
+    }
+    next();// 启动任务
+
     /**
+     * 当前这个新任务的，next方法
      * @param {*} nextValue 正常调用iterator.next时，传递的值
      * @param {*} err 错误对象
      * @param {boolean} isOver 是否结束
@@ -35,11 +46,13 @@ export default function(env, generatorFn, ...args){
             result = iterator.throw(err);
         }else if(isOver){
             result = iterator.return();
+            cbObj.callback && cbObj.callback();
         }else{
             result = iterator.next(nextValue);
         }
         const { value, done } = result;
         if(done){// 迭代结束
+            cbObj.callback && cbObj.callback();
             return;
         }
         // 没有结束
@@ -54,5 +67,5 @@ export default function(env, generatorFn, ...args){
         }
     }
 
-    return new Task();
+    return new Task(next, cbObj);
 }
