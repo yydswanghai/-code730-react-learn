@@ -1,0 +1,19 @@
+.warp{
+    padding: 10px;
+}
+.warp > div{
+    border-radius: 8px;
+    border: 1px solid rgb(227 227 227/1);
+}
+.tab{
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    border-collapse: collapse;
+}
+.tab tr{
+    height: 38px;
+}
+.tab tbody tr:nth-of-type(2n+1) {
+    background-color: rgb(247 247 247/1);
+}
