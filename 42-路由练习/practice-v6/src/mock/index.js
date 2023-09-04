@@ -5,6 +5,15 @@ mock.setup({ timeout: '200-600' })
 
 const all = uses.data;
 
+export async function getStudents() {
+    return {
+        code: 200,
+        data: all,
+        msg: 'ok',
+        total: all.length
+    }
+}
+
 // 根据id获取
 export async function getStudent(id){
     const stu = all.find(it => it.id === id);

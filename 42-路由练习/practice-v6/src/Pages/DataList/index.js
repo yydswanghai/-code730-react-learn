@@ -5,6 +5,7 @@ import SearchBar from './SearchBar'
 import Pager from '../../components/Pager'
 import Select from '../../components/Select'
 import qs from 'query-string'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 /**
  * 该函数用于获取地址栏参数中提供的查询条件，返回一个对象
@@ -54,13 +55,15 @@ function useResp(query) {
     return resp
 }
 // 根据条件对象，改变地址
-function changeLocation(query, history) {
+function changeLocation(query, navigate) {
     const search = qs.stringify(query)
-    history.push('?' + search)
+    navigate('?' + search)
 }
 
 export default function DataList(props) {
-    const query = getQuery(props.location.search);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const query = getQuery(location.search);
     const res = useResp(query);
     return (
         <div>
@@ -70,7 +73,7 @@ export default function DataList(props) {
                     ...value,
                     pageIndex: 1,
                 }
-                changeLocation(newQuery, props.history)
+                changeLocation(newQuery, navigate)
             }} />
             <Table list={res.list} />
             <Pager
@@ -83,7 +86,7 @@ export default function DataList(props) {
                         ...query,
                         pageIndex: newPage
                     }
-                    changeLocation(newQuery, props.history)
+                    changeLocation(newQuery, navigate)
                 }}
             />
             <Select
@@ -95,7 +98,7 @@ export default function DataList(props) {
                         ...query,
                         pageSize: newPageSize
                     }
-                    changeLocation(newQuery, props.history)
+                    changeLocation(newQuery, navigate)
                 }}
                 />
         </div>
