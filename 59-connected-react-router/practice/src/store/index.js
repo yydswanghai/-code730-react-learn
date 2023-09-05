@@ -5,16 +5,17 @@ import createSagaMiddleware from 'redux-saga'
 import sagaTask from './saga'
 import { routerMiddleware } from 'connected-react-router'
 import history from './history'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 // 启动saga任务
 const saga = createSagaMiddleware();
 
 export default createStore(reducer,
-    applyMiddleware(
+    composeWithDevTools(applyMiddleware(
         routerMiddleware(history),
         saga,
         logger
-    )
+    ))
 );
 
 saga.run(sagaTask)
