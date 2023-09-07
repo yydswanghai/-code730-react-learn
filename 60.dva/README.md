@@ -27,12 +27,11 @@
 6. 配置
    1. history：同步到仓库的history对象
    2. initialState：创建redux仓库时，使用的默认状态
-   3. onError: 当仓库的运行发生错误的时候，运行的函数
-   4. onAction: 可以配置redux中间件
-      1. 传入一个中间件对象
-      2. 传入一个中间件数组
-   5. onStateChange: 当仓库中的状态发生变化时运行的函数
-   6. onReducer：对模型中的reducer的进一步封装
+   3. onAction: 参数一[对象或数组] 可以配置redux中间件
+   4. onError: 参数一：错误对象，参数二：dispatch，当仓库的运行发生错误的时候，运行的函数
+   5. onStateChange: 参数一：更新的状态 当仓库中的状态发生变化时运行的函数
+   6. onReducer：对模型中的reducer的进一步封装，参数一：reducer，需要你返回一个函数
+      1. 返回的函数，参数一：state，参数二：action，返回reducer(state, action)
    7. onEffect：类似于对模型中的effect的进一步封装
    8. extraReducers：用于配置额外的reducer，它是一个对象，对象的每一个属性是一个方法，每个方法就是一个需要合并的reducer，方法名即属性名。
    9. extraEnhancers: 它是用于封装createStore函数的，dva会将原来的仓库创建函数作为参数传递，返回一个新的用于创建仓库的函数。函数必须放置到数组中。

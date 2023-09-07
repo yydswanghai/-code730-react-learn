@@ -28,12 +28,12 @@ export default function(opt = {}) {
      * @descirpt history: {history} 如果没有就使用hashHistory创建一个
      * @descirpt initialState: {*} 默认状态
      * @descirpt onAction: {Object|Array} 可以配置redux中间件
-     * @descirpt onError: {() => {}}
-     * @descirpt onStateChange: () => {}
-     * @descirpt onReducer: (reducer) => (state, action) => reducer(state, action)
-     * @descirpt onEffect: 
-     * @descirpt extraReducers:
-     * @descirpt extraEnhancers:
+     * @descirpt onError: {(err, dispatch) => {}} 错误的时候运行该函数
+     * @descirpt onStateChange: {() => {}} 仓库的状态(rootState)发生改变时，运行
+     * @descirpt onReducer: {(reducer) => (state, action) => reducer(state, action)} 对reducer进一步封装用的函数，参数为一个reducer，需要返回一个新的reducer
+     * @descirpt onEffect: {(oldEffect, sagaEffect, model, actionType) => generatorFn(action)} 对effect的进一步封装，需要返回一个生成器函数
+     * @descirpt extraReducers: {Object} 配置额外的reducer
+     * @descirpt extraEnhancers: {Array} 用于封装createStore函数的
      */
     function _getOptions() {
         return {
@@ -91,12 +91,33 @@ export default function(opt = {}) {
      * reducer从model里获取
      */
     function _getStore() {
-        const rootReducerObj = { ..._getExtraReducers() };
+        let rootReducerObj = {};
         app._models.forEach(model => {
             let { name, reducer } = _transformReducer(model);
             rootReducerObj[name] = reducer;
         })
-        const store = createStore(combineReducers(rootReducerObj), _getMiddlewares());
+        rootReducerObj = { ...rootReducerObj, ..._getExtraReducers() };
+        // 合并所有的reducer
+        let rootReducer = combineReducers(rootReducerObj);
+        const oldReducer = rootReducer;
+        // 封装onStateChange
+        // rootReducer = combineReducers(reducers) => (state, action) => { 状态: xxx }
+        // 因为需要newState，只能通过重新改写rootReducer，调用rootReducer(state, action)先拿到状态
+        rootReducer = function(state, action) {
+            const newState = oldReducer(state, action);
+            options.onStateChange(newState);
+            return newState;
+        }
+        // 封装onReducer
+        const oldReducer2 = rootReducer;
+        rootReducer = options.onReducer(oldReducer2);
+
+        // 封装 fn1 => fn2 => create
+        const newCreateStore = options.extraEnhancers.reduce((fn1, fn2) => {
+            return fn2(fn1)
+        }, createStore)
+
+        const store = newCreateStore(rootReducer, options.initialState, _getMiddlewares());
         _getMiddlewares.runSaga(store);// 运行saga
         // window.store = store
         return store;
@@ -163,8 +184,17 @@ export default function(opt = {}) {
                 for (const item of arr) {
                     // 因为takeEvery里的回调生成器函数只有一个action参数，但是使用的时候需要两个参数，所以重新封装一下
                     // effects: { actionType: function(action, sagaEffect){} }
-                    const generatorFn = function*(action) {
-                        yield item.generatorFn(action, { ...sagaEffects, put: item.put })
+                    let generatorFn = function*(action) {
+                        try {
+                            yield item.generatorFn(action, { ...sagaEffects, put: item.put })
+                        } catch (err) {
+                            options.onError(err, store.dispatch)
+                        }
+                    }
+                    // 封装onEffect
+                    if(options.onEffect){
+                        let oldEffect = generatorFn;
+                        generatorFn = options.onEffect(oldEffect, sagaEffects, item.model, item.type)
                     }
                     yield sagaEffects.takeEvery(item.type, generatorFn)
                 }
@@ -172,7 +202,8 @@ export default function(opt = {}) {
         }
         return composeWithDevTools(applyMiddleware(
             routerMiddleware(options.history),
-            saga
+            saga,
+            ...options.onAction
         ));
     }
     /**
@@ -197,7 +228,8 @@ export default function(opt = {}) {
             /* eslint-disable */
             ['@@dva'](state = 0, action){
                 return state;
-            }
+            },
+            ...options.extraReducers
         }
     }
     /**
