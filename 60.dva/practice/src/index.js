@@ -3,12 +3,22 @@ import { createBrowserHistory } from 'history'
 import counterModel from './models/counter'
 import routerConfig from './routerConfig'
 
+const logger = store => next => action => {
+    console.log('旧状态', store.getState());
+    next(action);
+    console.log('新状态', store.getState());
+}
+
 // 得到一个dva对象
 const app = dva({
     history: createBrowserHistory(),
+    // initialState: {
+    //     counter: 123
+    // },
     onError(err, dispatch){
         console.log(err.message, dispatch)
     },
+    onAction: logger,
     onStateChange(state){
         console.log(state)
     },
