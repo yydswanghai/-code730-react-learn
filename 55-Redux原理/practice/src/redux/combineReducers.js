@@ -26,13 +26,13 @@ function validateReducers(reducers) {
     }
 }
 /**
- * 返回reducer函数
+ * 合并，并返回reducer函数
  * @param {Object} reducers
  * {
  *   number: numberReducer(state.number, action)
  * }
  * => function (){
- *  { number: xxx状态 }
+ *  return { number: xxx状态 }
  * }
  */
 export default function (reducers){
