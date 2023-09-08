@@ -18,11 +18,19 @@ export default function(opt = {}) {
         _models: [],
         router,
         _router: null,
-        start
+        start,
+        use
     }
     const options = _getOptions();
     return app;
 
+    /**
+     * 使用dva插件
+     * @param {*} plugin 配置对象
+     */
+    function use(plugin) {
+        options = { ...options, ... plugin }
+    }
     /**
      * 得到配置
      * @descirpt history: {history} 如果没有就使用hashHistory创建一个
